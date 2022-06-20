@@ -1,6 +1,7 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify/lib/framework';
-import colors from 'vuetify/es5/util/colors';
+import Vuetify from 'vuetify';
+import { colors } from 'vuetify/lib';
+import { Framework } from 'vuetify'
 
 Vue.use(Vuetify);
 
@@ -34,3 +35,9 @@ export default new Vuetify({
     iconfont: 'mdi', // default - only for display purposes
   },
 });
+
+declare module 'vue/types/vue' {
+  interface Vue {
+    $vuetify: Framework
+  }
+}
