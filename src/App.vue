@@ -8,6 +8,8 @@
               src="https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc"
             ></v-img>
           </v-list-item-avatar>
+          <v-list-item-title v-if="this.happyfeelings">Estou Feliz!</v-list-item-title>
+          <v-list-item-title v-else>Estou Triste ...</v-list-item-title>
         </v-list-item>
 
         <v-list-item link>
@@ -61,16 +63,16 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-menu left bottom transition="slide-y-transition">
+      <v-menu :offset-y="true"  transition="slide-y-transition" :close-on-content-click="false" :close-on-click="false" shaped>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-dots-vertical</v-icon>
+            <v-icon>mdi-cog-outline</v-icon>
           </v-btn>
         </template>
 
         <v-card>
-          <v-list>
-            <v-list-item>
+          <v-list >
+            <v-list-item >
               <v-list-item-avatar>
                 <img
                   src="https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc"
@@ -86,8 +88,9 @@
               </v-list-item-content>
 
               <v-list-item-action>
-                <v-btn icon>
-                  <v-icon>mdi-heart</v-icon>
+                <v-btn icon @click="toggle_happyfeelings">
+                  <v-icon v-if="this.happyfeelings">mdi-emoticon-outline</v-icon>
+                  <v-icon v-else>mdi-emoticon-frown-outline</v-icon>                  
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
@@ -96,7 +99,7 @@
           <v-divider></v-divider>
 
           <v-list>
-            <v-list-item>
+            <v-list-item >
               <v-list-item-action>
                 <v-switch
                   inset
@@ -115,16 +118,9 @@
                 <v-icon v-else>mdi-white-balance-sunny</v-icon>
               </v-list-item-icon>
             </v-list-item>
-
-            <v-list-item>
-              <v-list-item-action>
-                <v-switch></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Enable hints</v-list-item-title>
-            </v-list-item>
           </v-list>
 
-          <v-card-actions>
+          <v-card-actions >
             <v-spacer></v-spacer>
 
             <v-btn class="primary"  text @click="menu = false"> Cancel </v-btn>
@@ -143,6 +139,7 @@ export default {
   name: "App",
   created() {
     const theme = localStorage.getItem("dark_theme");
+    const happyfeelings = localStorage.getItem("happyfeelings");    
     if (theme) {
       if (theme === "true") {
         this.$vuetify.theme.dark = true;
@@ -150,14 +147,27 @@ export default {
         this.$vuetify.theme.dark = false;
       }
     }
+    if (happyfeelings) {
+      if (happyfeelings === "true") {
+        this.happyfeelings = true;
+      } else {
+        this.happyfeelings = false;
+      }
+    }
+    
   },
   data: () => ({
     drawer: null,
+    happyfeelings: false,
   }),
   methods: {
     toggle_dark_mode: function () {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
       localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
+    },
+    toggle_happyfeelings: function () {
+      this.happyfeelings = !this.happyfeelings;
+      localStorage.setItem("happyfeelings", this.happyfeelings.toString());
     },
   },
 };
