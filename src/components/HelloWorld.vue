@@ -132,7 +132,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn class="primary" text @click="closeConfigMenu"> Cancel </v-btn>
+            <v-btn class="primary" text @click="closeConfigMenu">
+              Cancel
+            </v-btn>
             <v-btn class="secondary" text> Save </v-btn>
           </v-card-actions>
         </v-card>
@@ -150,19 +152,19 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 @Component
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  @Prop() private happyFeelings: boolean = false;
-  @Prop() private darkTheme: boolean = false;
-  @Prop() private configMenu: boolean = false;
+  happyFeelings: boolean = false;
+  darkTheme: boolean = false;
+  configMenu: boolean = false;
   created(): void {
-    this.getHappyFeelings();
+    this.getHappySettings();
   }
   data() {
     return {
       drawer: null,
     };
   }
-  
-  getHappyFeelings(): void {
+
+  getHappySettings(): void {
     let _happyFeelings = localStorage.getItem("happy_feelings");
     let _darkTheme = localStorage.getItem("dark_theme");
     if (_happyFeelings) {
@@ -175,14 +177,11 @@ export default class HelloWorld extends Vue {
     if (_darkTheme) {
       if (_darkTheme === "true") {
         vuetify.framework.theme.dark = true;
-        this.darkTheme = true;
       } else {
         vuetify.framework.theme.dark = false;
-        this.darkTheme = false;
       }
+      this.darkTheme = vuetify.framework.theme.dark;
     }
-    this.happyFeelings = !this.happyFeelings;
-    localStorage.setItem("happy_feelings", this.happyFeelings.toString());
   }
   toggleHappyFeelings(): void {
     this.happyFeelings = !this.happyFeelings;
@@ -190,7 +189,7 @@ export default class HelloWorld extends Vue {
   }
   toggleDarkMode(): void {
     vuetify.framework.theme.dark = !vuetify.framework.theme.dark;
-    this.darkTheme = !this.darkTheme;
+    this.darkTheme = vuetify.framework.theme.dark;
     localStorage.setItem("dark_theme", vuetify.framework.theme.dark.toString());
   }
   closeConfigMenu(): void {

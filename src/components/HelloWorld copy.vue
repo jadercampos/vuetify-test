@@ -8,7 +8,9 @@
               src="https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc"
             ></v-img>
           </v-list-item-avatar>
-          <v-list-item-title v-if="this.happyfeelings">Estou Feliz!</v-list-item-title>
+          <v-list-item-title v-if="this.happyFeelings"
+            >Estou Feliz!</v-list-item-title
+          >
           <v-list-item-title v-else>Estou Triste ...</v-list-item-title>
         </v-list-item>
 
@@ -63,7 +65,14 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-menu :offset-y="true"  transition="slide-y-transition" :close-on-content-click="false" :close-on-click="false" shaped>
+      <v-menu
+        :value="configMenu"
+        :offset-y="true"
+        transition="slide-y-transition"
+        :close-on-content-click="false"
+        :close-on-click="false"
+        shaped
+      >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
             <v-icon>mdi-cog-outline</v-icon>
@@ -71,8 +80,8 @@
         </template>
 
         <v-card>
-          <v-list >
-            <v-list-item >
+          <v-list>
+            <v-list-item>
               <v-list-item-avatar>
                 <img
                   src="https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc"
@@ -88,9 +97,11 @@
               </v-list-item-content>
 
               <v-list-item-action>
-                <v-btn icon @click="toggle_happyfeelings">
-                  <v-icon v-if="this.happyfeelings">mdi-emoticon-outline</v-icon>
-                  <v-icon v-else>mdi-emoticon-frown-outline</v-icon>                  
+                <v-btn icon @click="toggleHappyFeelings">
+                  <v-icon v-if="this.happyFeelings"
+                    >mdi-emoticon-outline</v-icon
+                  >
+                  <v-icon v-else>mdi-emoticon-frown-outline</v-icon>
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
@@ -99,79 +110,95 @@
           <v-divider></v-divider>
 
           <v-list>
-            <v-list-item >
+            <v-list-item>
               <v-list-item-action>
                 <v-switch
                   inset
-                  v-model="this.$vuetify.theme.dark"
-                  @click="toggle_dark_mode"
+                  v-model="this.darkTheme"
+                  @click="toggleDarkMode"
                 ></v-switch>
               </v-list-item-action>
-              <v-list-item-title v-if="this.$vuetify.theme.dark"
+              <v-list-item-title v-if="this.darkTheme"
                 >Dark Mode On</v-list-item-title
               >
               <v-list-item-title v-else>Dark Mode Off</v-list-item-title>
               <v-list-item-icon>
-                <v-icon v-if="this.$vuetify.theme.dark"
-                  >mdi-brightness-3</v-icon
-                >
+                <v-icon v-if="this.darkTheme">mdi-brightness-3</v-icon>
                 <v-icon v-else>mdi-white-balance-sunny</v-icon>
               </v-list-item-icon>
             </v-list-item>
           </v-list>
 
-          <v-card-actions >
+          <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn class="primary"  text @click="menu = false"> Cancel </v-btn>
-            <v-btn class="secondary" text @click="menu = false"> Save </v-btn>
+            <v-btn class="primary" text @click="closeConfigMenu"> Cancel </v-btn>
+            <v-btn class="secondary" text> Save </v-btn>
           </v-card-actions>
         </v-card>
       </v-menu>
     </v-app-bar>
 
-    <v-main> </v-main>
+    <v-main>
+      <h1>{{ msg }}</h1>
+    </v-main>
   </v-app>
 </template>
-
- <script>
-export default {
-  name: "App",
-  created() {
-    const theme = localStorage.getItem("dark_theme");
-    const happyfeelings = localStorage.getItem("happyfeelings");    
-    if (theme) {
-      if (theme === "true") {
-        this.$vuetify.theme.dark = true;
+<script lang="ts">
+import vuetify from "@/plugins/vuetify";
+import { Component, Prop, Vue } from "vue-property-decorator";
+@Component
+export default class HelloWorld extends Vue {
+  @Prop() private msg!: string;
+  @Prop() private happyFeelings: boolean = false;
+  @Prop() private darkTheme: boolean = false;
+  @Prop() private configMenu: boolean = false;
+  created(): void {
+    this.getHappyFeelings();
+  }
+  data() {
+    return {
+      drawer: null,
+    };
+  }
+  
+  getHappyFeelings(): void {
+    let _happyFeelings = localStorage.getItem("happy_feelings");
+    let _darkTheme = localStorage.getItem("dark_theme");
+    if (_happyFeelings) {
+      if (_happyFeelings === "true") {
+        this.happyFeelings = true;
       } else {
-        this.$vuetify.theme.dark = false;
+        this.happyFeelings = false;
       }
     }
-    if (happyfeelings) {
-      if (happyfeelings === "true") {
-        this.happyfeelings = true;
+    if (_darkTheme) {
+      if (_darkTheme === "true") {
+        vuetify.framework.theme.dark = true;
+        this.darkTheme = true;
       } else {
-        this.happyfeelings = false;
+        vuetify.framework.theme.dark = false;
+        this.darkTheme = false;
       }
     }
-    
-  },
-  data: () => ({
-    drawer: null,
-    happyfeelings: false,
-  }),
-  methods: {
-    toggle_dark_mode: function () {
-      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
-      localStorage.setItem("dark_theme", this.$vuetify.theme.dark.toString());
-    },
-    toggle_happyfeelings: function () {
-      this.happyfeelings = !this.happyfeelings;
-      localStorage.setItem("happyfeelings", this.happyfeelings.toString());
-    },
-  },
-};
+    this.happyFeelings = !this.happyFeelings;
+    localStorage.setItem("happy_feelings", this.happyFeelings.toString());
+  }
+  toggleHappyFeelings(): void {
+    this.happyFeelings = !this.happyFeelings;
+    localStorage.setItem("happy_feelings", this.happyFeelings.toString());
+  }
+  toggleDarkMode(): void {
+    vuetify.framework.theme.dark = !vuetify.framework.theme.dark;
+    this.darkTheme = !this.darkTheme;
+    localStorage.setItem("dark_theme", vuetify.framework.theme.dark.toString());
+  }
+  closeConfigMenu(): void {
+    this.configMenu = false;
+  }
+}
 </script>
+
 <style scoped>
 div {
   color: var(--v-secondary-base) !important;
