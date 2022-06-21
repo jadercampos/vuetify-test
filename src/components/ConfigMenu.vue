@@ -22,7 +22,6 @@
               alt="John"
             />
           </v-list-item-avatar>
-
           <v-list-item-content>
             <v-list-item-title>Jader Campos</v-list-item-title>
             <v-list-item-subtitle>Encantador de códigos</v-list-item-subtitle>
@@ -30,8 +29,8 @@
 
           <v-list-item-action>
             <v-btn icon @click="toggleHappyFeelings">
-              <v-icon v-if="this.happyFeelings">mdi-emoticon-outline</v-icon>
-              <v-icon v-else>mdi-emoticon-frown-outline</v-icon>
+              <v-icon v-if="this.happyFeelings">fa-face-grin-stars</v-icon>
+              <v-icon v-else>fa-heart-crack</v-icon>
             </v-btn>
           </v-list-item-action>
         </v-list-item>
@@ -61,8 +60,8 @@
 
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn class="primary" text @click="closeConfigMenu"> Cancel </v-btn>
-        <v-btn class="secondary" text> Save </v-btn>
+        <v-btn class="error" text @click="closeConfigMenu"> Cancel </v-btn>
+        <v-btn class="success" text> Save </v-btn>
       </v-card-actions>
     </v-card>
   </v-menu>
@@ -87,7 +86,7 @@ export default class ConfigMenu extends Vue {
       } else {
         this.happyFeelings = false;
       }
-      this.$emit('feelingHappy',this.happyFeelings);
+      this.$emit("feelingHappy", this.happyFeelings);
     }
     if (_darkTheme) {
       if (_darkTheme === "true") {
@@ -100,7 +99,7 @@ export default class ConfigMenu extends Vue {
   }
   toggleHappyFeelings(): void {
     this.happyFeelings = !this.happyFeelings;
-    this.$emit('feelingHappy',this.happyFeelings);
+    this.$emit("feelingHappy", this.happyFeelings);
     localStorage.setItem("happy_feelings", this.happyFeelings.toString());
   }
   toggleDarkMode(): void {

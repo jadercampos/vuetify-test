@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="admin">
     <v-navigation-drawer v-model="drawer" color="background" app>
       <v-list>
         <v-list-item class="px-2">
@@ -27,38 +27,38 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item link>
+        <v-list-item link to="/">
           <v-list-item-icon>
-            <v-icon>mdi-folder</v-icon>
+            <v-icon>fa-house-medical</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>My Files</v-list-item-title>
+          <v-list-item-title>Dashboard</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/gatos">
           <v-list-item-icon>
-            <v-icon>mdi-account-multiple</v-icon>
+            <v-icon>fa-cat</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Shared with me</v-list-item-title>
+          <v-list-item-title>Gatos</v-list-item-title>
         </v-list-item>
-        <v-list-item link>
+        <v-list-item link to="/cachorros">
           <v-list-item-icon>
-            <v-icon>mdi-star</v-icon>
+            <v-icon>fa-dog</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>Starred</v-list-item-title>
+          <v-list-item-title>Cachorros</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="background" app>
+    <v-app-bar color="backgroundSecondary" app>
       <v-app-bar-nav-icon icon @click="drawer = !drawer">
         <v-icon v-if="drawer">mdi-menu-open</v-icon>
         <v-icon v-else>mdi-menu</v-icon>
       </v-app-bar-nav-icon>
 
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>{{ msg }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
       <v-btn icon>
-        <v-icon>mdi-heart</v-icon>
+        <v-icon>fa-gamepad</v-icon>
       </v-btn>
 
       <v-btn>
@@ -67,11 +67,18 @@
       <meu-menu @feelingHappy="changeFeelings" />
     </v-app-bar>
 
-    <v-main> </v-main>
+    <v-main>
+      <v-breadcrumbs :items="items">
+        <template v-slot:divider>
+          <v-icon>fa-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+      <router-view></router-view>
+    </v-main>
   </v-app>
 </template>
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue } from "vue-property-decorator";
 import ConfigMenu from "./ConfigMenu.vue";
 
 @Component({
@@ -79,11 +86,22 @@ import ConfigMenu from "./ConfigMenu.vue";
     meuMenu: ConfigMenu,
   },
 })
-export default class HelloWorld extends Vue {
+export default class Admin extends Vue {
+  @Prop() private msg!: string;
   happyFeelings: boolean = false;
+  created() {
+    document.title = "App Lacostado";
+  }
   data() {
     return {
       drawer: null,
+      items: [
+        {
+          text: 'Dashboard',
+          disabled: false,
+          href: '/'
+        }
+      ]
     };
   }
   changeFeelings(happy: boolean): void {

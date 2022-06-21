@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
 import { colors } from 'vuetify/lib';
 import { Framework } from 'vuetify'
 
@@ -10,29 +11,30 @@ export default new Vuetify({
     options: { customProperties: true },
     themes: {
       light: {
-        primary: colors.pink.lighten2,
-        secondary: colors.pink.darken1,
+        primary: colors.green.darken1,
+        secondary: colors.green.darken4,
         accent: colors.shades.black,
-        background: colors.grey.lighten5, 
-        error: colors.red.lighten3,
-        warning: colors.yellow.lighten3,
-        info: colors.blue.lighten3,
-        success:  colors.green.lighten3
+        background: colors.green.lighten5, 
+        backgroundSecondary: colors.green.lighten4, 
+        // error: colors.red.lighten3,
+        //warning: colors.yellow.lighten3,
+        //info: colors.blue.lighten3,
+        // success:  colors.green.lighten3
       },
       dark: {
-        primary: colors.pink.darken4,
-        secondary: colors.pink.lighten3,
-        background: colors.grey.darken4,
-        accent: colors.shades.black,
-        error: colors.red.lighten3,
+        primary: colors.lime.lighten3,
+        secondary: colors.lime.lighten1,
+        //background: colors.grey.darken4,
+        //accent: colors.shades.black,
+        // error: colors.red.lighten3,
         warning: colors.yellow.lighten3,
-        info: colors.blue.lighten3,
-        success:  colors.green.lighten3
+        //info: colors.blue.lighten3,
+        // success:  colors.green.lighten3
       },
     },
   },
   icons: {
-    iconfont: 'mdi', // default - only for display purposes
+    iconfont: 'fa', // default - only for display purposes
   },
 });
 
