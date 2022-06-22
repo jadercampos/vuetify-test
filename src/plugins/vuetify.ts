@@ -24,6 +24,8 @@ export default new Vuetify({
       dark: {
         primary: colors.lime.lighten3,
         secondary: colors.lime.lighten1,
+        background: "#2a2a2a", 
+        backgroundSecondary: "#1b1b1b", 
         //background: colors.grey.darken4,
         //accent: colors.shades.black,
         // error: colors.red.lighten3,

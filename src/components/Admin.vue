@@ -10,9 +10,49 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
+      <v-responsive max-width="400">
+        <v-text-field
+          dense
+          flat
+          hide-details
+          rounded
+          solo-inverted
+          clearable
+          placeholder="Search"
+        >
+          <template v-slot:prepend>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on }">
+                <v-icon v-on="on"> mdi-help-circle-outline </v-icon>
+              </template>
+              <span  style="color:white">Dica do Dolinho!</span>
+              
+            </v-tooltip>
+          </template>
+          <template v-slot:append>
+            <v-fade-transition leave-absolute>
+              <v-progress-circular
+                v-if="loading"
+                size="24"
+                color="info"
+                indeterminate
+              ></v-progress-circular>
+              <img v-else width="24" height="24" src="../assets/1.png" alt="" />
+            </v-fade-transition> </template
+        ></v-text-field>
+      </v-responsive>
+
+    <v-btn
+      class="mx-2"
+      fab
+      small
+      color="background"
+      elevation="5"
+    >
+      <v-icon>
+        fa-solid fa-magnifying-glass
+      </v-icon>
+    </v-btn>
 
       <v-btn icon>
         <v-badge color="error" right overlap>
