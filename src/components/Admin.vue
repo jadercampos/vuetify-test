@@ -1,13 +1,45 @@
 <template>
   <v-app id="admin">
+    <v-app-bar color="backgroundSecondary" app>
+      <v-app-bar-nav-icon icon @click="drawer = !drawer">
+        <v-icon v-if="drawer">mdi-menu-open</v-icon>
+        <v-icon v-else>mdi-menu</v-icon>
+      </v-app-bar-nav-icon>
+
+      <v-toolbar-title>{{ msg }}</v-toolbar-title>
+
+      <v-spacer></v-spacer>
+
+      <v-btn>
+        <v-icon>mdi-magnify</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-badge color="error" right overlap>
+          <template v-slot:badge>
+            <span>24</span>
+          </template>
+          <v-avatar size="36">
+            <v-icon>fa-gamepad</v-icon>
+          </v-avatar>
+        </v-badge>
+      </v-btn>
+
+      <meu-menu @feelingHappy="changeFeelings" />
+    </v-app-bar>
     <v-navigation-drawer v-model="drawer" color="background" app>
       <v-list>
         <v-list-item class="px-2">
-          <v-list-item-avatar>
-            <v-img
-              src="https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc"
-            ></v-img>
-          </v-list-item-avatar>
+          <v-list-item-icon>
+            <v-badge color="info" right overlap>
+              <template v-slot:badge>
+                <span>69</span>
+              </template>
+              <v-avatar size="36">
+                <v-img :src="src"></v-img>
+              </v-avatar>
+            </v-badge>
+          </v-list-item-icon>
           <v-list-item-title v-if="this.happyFeelings"
             >Estou Feliz!</v-list-item-title
           >
@@ -48,25 +80,6 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar color="backgroundSecondary" app>
-      <v-app-bar-nav-icon icon @click="drawer = !drawer">
-        <v-icon v-if="drawer">mdi-menu-open</v-icon>
-        <v-icon v-else>mdi-menu</v-icon>
-      </v-app-bar-nav-icon>
-
-      <v-toolbar-title>{{ msg }}</v-toolbar-title>
-
-      <v-spacer></v-spacer>
-      <v-btn icon>
-        <v-icon>fa-gamepad</v-icon>
-      </v-btn>
-
-      <v-btn>
-        <v-icon>mdi-magnify</v-icon>
-      </v-btn>
-      <meu-menu @feelingHappy="changeFeelings" />
-    </v-app-bar>
-
     <v-main>
       <v-breadcrumbs :items="items">
         <template v-slot:divider>
@@ -95,13 +108,14 @@ export default class Admin extends Vue {
   data() {
     return {
       drawer: null,
+      src: "https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc",
       items: [
         {
-          text: 'Dashboard',
+          text: "Dashboard",
           disabled: false,
-          href: '/'
-        }
-      ]
+          href: "/",
+        },
+      ],
     };
   }
   changeFeelings(happy: boolean): void {

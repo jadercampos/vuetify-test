@@ -16,12 +16,16 @@
     <v-card>
       <v-list>
         <v-list-item>
-          <v-list-item-avatar>
-            <img
-              src="https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc"
-              alt="John"
-            />
-          </v-list-item-avatar>
+          <v-list-item-icon>
+            <v-badge color="warning" right overlap>
+              <template v-slot:badge>
+                <span>69</span>
+              </template>
+              <v-avatar size="36">
+                <v-img :src="src"></v-img>
+              </v-avatar>
+            </v-badge>
+          </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>Jader Campos</v-list-item-title>
             <v-list-item-subtitle>Encantador de códigos</v-list-item-subtitle>
@@ -29,8 +33,14 @@
 
           <v-list-item-action>
             <v-btn icon @click="toggleHappyFeelings">
+              <v-badge color="success" right overlap>
+              <template v-slot:badge>
+                <span>69</span>
+              </template>
               <v-icon v-if="this.happyFeelings">fa-face-grin-stars</v-icon>
               <v-icon v-else>fa-heart-crack</v-icon>
+            </v-badge>
+
             </v-btn>
           </v-list-item-action>
         </v-list-item>
@@ -76,6 +86,11 @@ export default class ConfigMenu extends Vue {
   configMenu: boolean = false;
   created(): void {
     this.getHappySettings();
+  }
+    data() {
+    return {
+      src: "https://media-exp1.licdn.com/dms/image/C4D03AQGaaDa7lEEgiw/profile-displayphoto-shrink_800_800/0/1624426580958?e=1661385600&v=beta&t=cGEjJQVcsi-VxFZXj-rNjXaPNeJsrh4H3DxpqTRwlBc",
+    };
   }
   getHappySettings(): void {
     let _happyFeelings = localStorage.getItem("happy_feelings");
