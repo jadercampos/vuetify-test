@@ -45,7 +45,7 @@
     <v-btn
       class="mx-2"
       fab
-      small
+      x-small
       color="background"
       elevation="5"
     >
