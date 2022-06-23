@@ -24,6 +24,6 @@ yarn lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### Heroku Deployment
-Heroku (Dev) [https://shielded-reaches-30948.herokuapp.com](https://shielded-reaches-30948.herokuapp.com)
+Heroku (Dev): [https://shielded-reaches-30948.herokuapp.com](https://shielded-reaches-30948.herokuapp.com)
 
-Shortcut [http://shorturl.at/norxW](http://shorturl.at/norxW)
+Shortcut: [http://shorturl.at/norxW](http://shorturl.at/norxW)
